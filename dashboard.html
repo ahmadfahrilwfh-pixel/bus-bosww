@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransNexus Dashboard - Monitoring Pusat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .card-glow:hover { border-color: #22d3ee; box-shadow: 0 0 20px rgba(34, 211, 238, 0.1); }
+        #map { height: 400px; border-radius: 1.5rem; z-index: 0; }
+        .sidebar-link:hover { background: rgba(34, 211, 238, 0.1); color: #22d3ee; }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+
+    <aside class="hidden lg:flex flex-col w-64 glass border-r border-white/5 p-6 space-y-8">
+        <div class="flex items-center gap-3 px-2">
+            <div class="p-2 bg-cyan-500 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M7 17h10"/><path d="M8 21h8"/><path d="M2 13h20"/><path d="M18 13v-3a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v3"/></svg>
+            </div>
+            <span class="text-xl font-extrabold tracking-tighter text-cyan-400">TransNexus</span>
+        </div>
+
+        <nav class="flex-1 space-y-2">
+            <a href="#" class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition text-cyan-400 bg-cyan-500/10 font-bold">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                Dashboard
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Pelacakan GPS
+            </a>
+            <a href="#" class="sidebar-link flex items-center gap-3 p-3 rounded-xl transition text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                Jadwal & Tiket
+            </a>
+        </nav>
+
+        <div class="pt-6 border-t border-white/5">
+            <a href="index.html" class="flex items-center gap-3 p-3 text-red-400 hover:bg-red-500/10 rounded-xl transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                Keluar
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-4 md:p-10 space-y-8">
+        
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-extrabold tracking-tight">Pusat Kendali Armada</h2>
+                <p class="text-gray-400 text-sm">Selamat pagi, PO. Sumber Makmur</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="glass px-4 py-2 rounded-2xl flex items-center gap-3">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span class="text-xs font-bold text-green-400 tracking-wider">SYSTEM ONLINE</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass p-6 rounded-[2rem] card-glow transition-all">
+                <p class="text-gray-400 text-xs font-bold uppercase mb-2">Total Pendapatan</p>
+                <h3 class="text-2xl font-black text-white">Rp 128.5M</h3>
+                <span class="text-green-400 text-xs font-bold mt-2 inline-block">+12% Bulan ini</span>
+            </div>
+            <div class="glass p-6 rounded-[2rem] card-glow transition-all">
+                <p class="text-gray-400 text-xs font-bold uppercase mb-2">Tiket Terjual</p>
+                <h3 class="text-2xl font-black text-white">1,452</h3>
+                <span class="text-cyan-400 text-xs font-bold mt-2 inline-block">Update 5 menit lalu</span>
+            </div>
+            <div class="glass p-6 rounded-[2rem] card-glow transition-all">
+                <p class="text-gray-400 text-xs font-bold uppercase mb-2">Armada Aktif</p>
+                <h3 class="text-2xl font-black text-white">42 / 45</h3>
+                <span class="text-gray-500 text-xs font-bold mt-2 inline-block">3 Dalam Perawatan</span>
+            </div>
+            <div class="glass p-6 rounded-[2rem] card-glow transition-all">
+                <p class="text-gray-400 text-xs font-bold uppercase mb-2">Rating Penumpang</p>
+                <h3 class="text-2xl font-black text-white">4.8 / 5.0</h3>
+                <span class="text-yellow-400 text-xs font-bold mt-2 inline-block">⭐⭐⭐⭐⭐</span>
+            </div>
+        </div>
+
+        <section class="glass p-6 rounded-[2.5rem]">
+            <div class="flex items-center justify-between mb-6">
+                <h4 class="text-xl font-bold flex items-center gap-2">
+                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
+                    Live Fleet Tracking
+                </h4>
+                <span class="text-xs text-gray-400">Menampilkan 42 unit di jalan</span>
+            </div>
+            <div id="map"></div>
+        </section>
+
+        <section class="glass p-8 rounded-[2.5rem] overflow-hidden">
+            <h4 class="text-xl font-bold mb-6 italic">Transaksi Terbaru</h4>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="text-gray-400 border-b border-white/5 uppercase text-[10px] tracking-widest">
+                            <th class="pb-4">Penumpang</th>
+                            <th class="pb-4">Rute</th>
+                            <th class="pb-4">Status</th>
+                            <th class="pb-4">Metode</th>
+                            <th class="pb-4">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        <tr>
+                            <td class="py-4 font-bold text-white">Budi Santoso</td>
+                            <td class="py-4 text-gray-400">Jakarta - Solo</td>
+                            <td class="py-4"><span class="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-[10px] font-bold">LUNAS</span></td>
+                            <td class="py-4 text-gray-400">QRIS</td>
+                            <td class="py-4 font-bold">Rp 250.000</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold text-white">Siti Aminah</td>
+                            <td class="py-4 text-gray-400">Bandung - Surabaya</td>
+                            <td class="py-4"><span class="px-3 py-1 bg-yellow-500/10 text-yellow-400 rounded-full text-[10px] font-bold">PENDING</span></td>
+                            <td class="py-4 text-gray-400">VA BCA</td>
+                            <td class="py-4 font-bold">Rp 450.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inisialisasi Peta (Titik tengah di Jawa/Indonesia)
+        var map = L.map('map').setView([-7.250445, 110.165443], 7);
+
+        // Gunakan Tile dari CartoDB (Dark Voyager agar cocok dengan tema Dark Mode)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Contoh Marker Bis (Simulasi ID GPS)
+        var busIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: "<div style='background-color:#22d3ee; width:12px; height:12px; border-radius:50%; border:2px solid white; box-shadow: 0 0 10px #22d3ee;'></div>",
+            iconSize: [12, 12],
+            iconAnchor: [6, 6]
+        });
+
+        L.marker([-6.175110, 106.865036], {icon: busIcon}).addTo(map).bindPopup("<b>Bis 01</b><br>Rute: Jakarta - Solo<br>Speed: 80 km/h");
+        L.marker([-7.257472, 112.752088], {icon: busIcon}).addTo(map).bindPopup("<b>Bis 05</b><br>Rute: Surabaya - Bali<br>Speed: 0 km/h (Istirahat)");
+    </script>
+</body>
+</html>
