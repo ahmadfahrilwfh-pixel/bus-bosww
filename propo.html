@@ -2,80 +2,102 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Investment Memorandum | MERR Surabaya</title>
+    <title>Investment Portfolio | MERR Surabaya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --bg: #0a0a0a; --glass: rgba(255, 255, 255, 0.03); }
-        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        #app { width: 90%; height: 85%; background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 60px; position: relative; }
+        :root { --accent: #00f2ff; --bg: #050505; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
         
-        .slide { display: none; }
-        .slide.active { display: block; animation: fade 0.8s; }
-        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        /* Layout */
+        .container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
+        .slide { display: none; width: 80%; max-width: 1000px; padding: 40px; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .slide.active { display: block; animation: slideIn 0.6s ease-out; }
         
-        h1 { color: var(--gold); font-size: 2.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        p { font-size: 1.1rem; line-height: 1.8; color: #b3b3b3; max-width: 800px; }
+        h2 { color: var(--accent); margin-top: 0; font-size: 2rem; letter-spacing: -1px; }
+        p { color: #aaa; font-size: 1.1rem; line-height: 1.6; }
         
-        .docs-bar { position: absolute; top: 40px; right: 60px; display: flex; gap: 10px; }
-        .doc-btn { padding: 10px 20px; border: 1px solid var(--gold); color: var(--gold); cursor: pointer; border-radius: 5px; font-size: 0.8rem; transition: 0.3s; }
-        .doc-btn:hover { background: var(--gold); color: black; }
+        /* Image Grid */
+        .doc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 20px; }
+        .doc-item { cursor: pointer; border-radius: 8px; overflow: hidden; border: 1px solid #333; height: 150px; }
+        .doc-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .doc-item img:hover { transform: scale(1.1); }
+
+        /* Lightbox */
+        #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 100; justify-content: center; align-items: center; }
+        #lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; }
+
+        /* Navigation */
+        .nav { position: absolute; bottom: 50px; display: flex; gap: 20px; }
+        button { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 12px 30px; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: var(--accent); color: black; }
         
-        .nav-controls { position: absolute; bottom: 40px; left: 60px; }
-        button { background: transparent; border: 1px solid #fff; color: white; padding: 10px 30px; cursor: pointer; margin-right: 15px; border-radius: 30px; }
-        button:hover { background: white; color: black; }
-        
-        .footer { position: absolute; bottom: 40px; right: 60px; color: #555; font-size: 0.8rem; letter-spacing: 5px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="docs-bar">
-    <div class="doc-btn" onclick="window.open('putusan_pn.pdf')">PUTUSAN PN</div>
-    <div class="doc-btn" onclick="window.open('penetapan_amaning.pdf')">AMANING</div>
-    <div class="doc-btn" onclick="window.open('dukungan_ma.pdf')">DUKUNGAN MA</div>
-    <div class="doc-btn" onclick="window.open('dukungan_polri.pdf')">POLRI</div>
-    <div class="doc-btn" onclick="window.open('ijb_notaris.pdf')">IJB</div>
-    <div class="doc-btn" onclick="window.open('dokumen_bpn.pdf')">BPN</div>
-</div>
+<div class="container" id="app"></div>
 
-<div id="app">
-    <div class="slide active">
-        <h1>Prime Land MERR Surabaya</h1>
-        <p>Aset 8,08 Hektar (80.857 m²) | Strategi Investasi dengan Mitigasi Risiko Hukum Penuh.<br><br>Dokumen ini adalah ringkasan legalitas komprehensif bagi calon mitra strategis.</p>
-    </div>
-    <div class="slide">
-        <h1>Legal Backbone: Inkracht</h1>
-        <p><strong>Dasar:</strong> Putusan PN Surabaya No. 728/Pdt.G/2018.<br>Hak kepemilikan aset telah berkekuatan hukum tetap (Inkracht). Seluruh gugatan pihak ketiga telah digugurkan. Ini adalah landasan utama bahwa aset ini bersih dari sengketa perdata.</p>
-    </div>
-    <div class="slide">
-        <h1>Eksekusi & Amaning</h1>
-        <p><strong>Dasar:</strong> Penetapan Amaning No. 43.EKS.2019.<br>Negara melalui institusi pengadilan sedang aktif menjalankan prosedur pengosongan lahan. Amaning ini membuktikan bahwa aset sedang dalam tahap peralihan fisik resmi, bukan sekadar janji.</p>
-    </div>
-    <div class="slide">
-        <h1>Institutional Security</h1>
-        <p><strong>Dukungan:</strong> Mahkamah Agung & Mabes Polri (Tipidum).<br>Proyek ini diawasi langsung oleh instansi penegak hukum tertinggi. Surat dukungan dari MA dan Polri menjamin keamanan aset dari intervensi pihak luar atau mafia tanah yang sering menjadi momok bagi investor properti.</p>
-    </div>
-    <div class="slide">
-        <h1>Transaksi Sah (IJB)</h1>
-        <p><strong>Dokumen:</strong> Ikatan Jual Beli Notaris Jarot Pribadi.<br>Seluruh hubungan kontraktual antara pemilik dan pihak pengelola telah tertuang dalam akta notariil yang sah. Transparansi transaksi dijamin oleh prosedur hukum perdata yang ketat.</p>
-    </div>
-    <div class="slide">
-        <h1>Progress Final: BPN</h1>
-        <p><strong>Status:</strong> Validasi Administrasi.<br>Kami sedang memproses finalisasi administrasi di BPN untuk sertifikasi penuh. Dokumen ini adalah bukti bahwa proyek bergerak maju dari fase sengketa menuju fase legalitas formal 100%.</p>
-    </div>
+<div id="lightbox" onclick="this.style.display='none'">
+    <img id="lb-img" src="">
 </div>
-
-<div class="nav-controls">
-    <button onclick="prev()">SEBELUMNYA</button>
-    <button onclick="next()">SELANJUTNYA</button>
-</div>
-
-<div class="footer">by amdf</div>
 
 <script>
-    let c = 0; const s = document.querySelectorAll('.slide');
-    function update() { s.forEach((x,i) => x.classList.toggle('active', i===c)); }
-    function next() { if(c < s.length-1) { c++; update(); } }
-    function prev() { if(c > 0) { c--; update(); } }
+// --- KONFIGURASI DATA (UPDATE DI SINI) ---
+const slidesData = [
+    {
+        title: "Executive Summary: MERR Prime Land",
+        desc: "Aset premium seluas 80.857 m² di jantung Surabaya Timur. Investasi ini bukan sekadar akuisisi lahan, melainkan pengambilalihan aset strategis dengan perlindungan hukum yang telah tervalidasi penuh oleh negara.",
+        images: ["image_292c82.jpg"] // Ganti dengan nama file Anda
+    },
+    {
+        title: "Fondasi Legal (Inkracht)",
+        desc: "Putusan PN Surabaya No. 728/Pdt.G/2018 adalah kunci utama. Status 'Inkracht' menjamin bahwa kepemilikan aset ini tidak lagi dapat diganggu gugat oleh pihak manapun. Ini adalah level keamanan hukum tertinggi dalam sengketa properti.",
+        images: ["Salinan Putusan PN Surabaya No.728.Pdt.G.2018.PN Sby_page-0001.jpg", "Salinan Putusan PN Surabaya No.728.Pdt.G.2018.PN Sby_page-0002.jpg"]
+    },
+    {
+        title: "Eksekusi Riil (Amaning)",
+        desc: "Proses eksekusi sedang berjalan aktif. Surat Amaning No. 43.EKS.2019 membuktikan bahwa pengadilan telah mengeluarkan teguran resmi untuk pengosongan lahan, yang artinya aset ini dalam fase transisi penyerahan fisik.",
+        images: ["penetapan amaning Nomor 43.EKS.2019.PN .Sby.Jo,, Nomor 728.Pdt.G.2018.PN.Sby_page-0001.jpg"]
+    },
+    {
+        title: "Institutional Protection",
+        desc: "Dukungan pengawasan dari Mabes Polri (Tipidum) dan Mahkamah Agung memberikan jaminan keamanan absolut. Ini meminimalisir risiko intervensi pihak luar dan mafia tanah yang sering menghambat proyek properti.",
+        images: ["srt Mabes Tipidum arriy wibowo_page-0001.jpg", "srt dari MA pak arriy wibowo_page-0001.jpg"]
+    },
+    {
+        title: "Transaksi & Administrasi",
+        desc: "Perikatan jual beli telah dilakukan secara notariil (IJB Pak Arriy Wibowo) dan saat ini progres finalisasi administrasi di BPN sedang berjalan, memastikan aset ini menuju sertifikasi penuh.",
+        images: ["Ikatan Jual Beli MERR Pak Arriy Wibowo_page-0001.jpg", "file untuk BPN_page-0001.jpg"]
+    }
+];
+
+// --- JAVASCRIPT ENGINE ---
+let current = 0;
+const app = document.getElementById('app');
+
+function render() {
+    app.innerHTML = slidesData.map((s, i) => `
+        <div class="slide ${i === current ? 'active' : ''}">
+            <h2>${s.title}</h2>
+            <p>${s.desc}</p>
+            <div class="doc-grid">
+                ${s.images.map(img => `<div class="doc-item" onclick="openLB('img/${img}')"><img src="img/${img}"></div>`).join('')}
+            </div>
+        </div>
+    `).join('') + `
+        <div class="nav">
+            <button onclick="prev()">SEBELUMNYA</button>
+            <button onclick="next()">SELANJUTNYA</button>
+        </div>
+    `;
+}
+
+function next() { if(current < slidesData.length - 1) { current++; render(); } }
+function prev() { if(current > 0) { current--; render(); } }
+function openLB(src) { document.getElementById('lb-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
+
+render();
 </script>
 </body>
 </html>
