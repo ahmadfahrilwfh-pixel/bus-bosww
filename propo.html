@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Investment Memorandum | MERR Surabaya</title>
+    <style>
+        :root { --gold: #c5a059; --bg: #0a0a0a; --glass: rgba(255, 255, 255, 0.03); }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        #app { width: 90%; height: 85%; background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 60px; position: relative; }
+        
+        .slide { display: none; }
+        .slide.active { display: block; animation: fade 0.8s; }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        
+        h1 { color: var(--gold); font-size: 2.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        p { font-size: 1.1rem; line-height: 1.8; color: #b3b3b3; max-width: 800px; }
+        
+        .docs-bar { position: absolute; top: 40px; right: 60px; display: flex; gap: 10px; }
+        .doc-btn { padding: 10px 20px; border: 1px solid var(--gold); color: var(--gold); cursor: pointer; border-radius: 5px; font-size: 0.8rem; transition: 0.3s; }
+        .doc-btn:hover { background: var(--gold); color: black; }
+        
+        .nav-controls { position: absolute; bottom: 40px; left: 60px; }
+        button { background: transparent; border: 1px solid #fff; color: white; padding: 10px 30px; cursor: pointer; margin-right: 15px; border-radius: 30px; }
+        button:hover { background: white; color: black; }
+        
+        .footer { position: absolute; bottom: 40px; right: 60px; color: #555; font-size: 0.8rem; letter-spacing: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="docs-bar">
+    <div class="doc-btn" onclick="window.open('putusan_pn.pdf')">PUTUSAN PN</div>
+    <div class="doc-btn" onclick="window.open('penetapan_amaning.pdf')">AMANING</div>
+    <div class="doc-btn" onclick="window.open('dukungan_ma.pdf')">DUKUNGAN MA</div>
+    <div class="doc-btn" onclick="window.open('dukungan_polri.pdf')">POLRI</div>
+    <div class="doc-btn" onclick="window.open('ijb_notaris.pdf')">IJB</div>
+    <div class="doc-btn" onclick="window.open('dokumen_bpn.pdf')">BPN</div>
+</div>
+
+<div id="app">
+    <div class="slide active">
+        <h1>Prime Land MERR Surabaya</h1>
+        <p>Aset 8,08 Hektar (80.857 m²) | Strategi Investasi dengan Mitigasi Risiko Hukum Penuh.<br><br>Dokumen ini adalah ringkasan legalitas komprehensif bagi calon mitra strategis.</p>
+    </div>
+    <div class="slide">
+        <h1>Legal Backbone: Inkracht</h1>
+        <p><strong>Dasar:</strong> Putusan PN Surabaya No. 728/Pdt.G/2018.<br>Hak kepemilikan aset telah berkekuatan hukum tetap (Inkracht). Seluruh gugatan pihak ketiga telah digugurkan. Ini adalah landasan utama bahwa aset ini bersih dari sengketa perdata.</p>
+    </div>
+    <div class="slide">
+        <h1>Eksekusi & Amaning</h1>
+        <p><strong>Dasar:</strong> Penetapan Amaning No. 43.EKS.2019.<br>Negara melalui institusi pengadilan sedang aktif menjalankan prosedur pengosongan lahan. Amaning ini membuktikan bahwa aset sedang dalam tahap peralihan fisik resmi, bukan sekadar janji.</p>
+    </div>
+    <div class="slide">
+        <h1>Institutional Security</h1>
+        <p><strong>Dukungan:</strong> Mahkamah Agung & Mabes Polri (Tipidum).<br>Proyek ini diawasi langsung oleh instansi penegak hukum tertinggi. Surat dukungan dari MA dan Polri menjamin keamanan aset dari intervensi pihak luar atau mafia tanah yang sering menjadi momok bagi investor properti.</p>
+    </div>
+    <div class="slide">
+        <h1>Transaksi Sah (IJB)</h1>
+        <p><strong>Dokumen:</strong> Ikatan Jual Beli Notaris Jarot Pribadi.<br>Seluruh hubungan kontraktual antara pemilik dan pihak pengelola telah tertuang dalam akta notariil yang sah. Transparansi transaksi dijamin oleh prosedur hukum perdata yang ketat.</p>
+    </div>
+    <div class="slide">
+        <h1>Progress Final: BPN</h1>
+        <p><strong>Status:</strong> Validasi Administrasi.<br>Kami sedang memproses finalisasi administrasi di BPN untuk sertifikasi penuh. Dokumen ini adalah bukti bahwa proyek bergerak maju dari fase sengketa menuju fase legalitas formal 100%.</p>
+    </div>
+</div>
+
+<div class="nav-controls">
+    <button onclick="prev()">SEBELUMNYA</button>
+    <button onclick="next()">SELANJUTNYA</button>
+</div>
+
+<div class="footer">by amdf</div>
+
+<script>
+    let c = 0; const s = document.querySelectorAll('.slide');
+    function update() { s.forEach((x,i) => x.classList.toggle('active', i===c)); }
+    function next() { if(c < s.length-1) { c++; update(); } }
+    function prev() { if(c > 0) { c--; update(); } }
+</script>
+</body>
+</html>
