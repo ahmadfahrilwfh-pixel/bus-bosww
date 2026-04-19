@@ -7,13 +7,14 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
+<script src="https://cdn.tailwindcss.com"></script>
+
 <style>
 :root{
     --primary:#00F5FF;
-    --secondary:#7C4DFF;
+    --secondary:#6D5DFB;
     --dark:#07111F;
-    --dark2:#0E1B2F;
-    --glass:rgba(255,255,255,0.08);
+    --dark2:#0D1B2A;
     --white:#ffffff;
     --soft:#C8D2E0;
 }
@@ -25,409 +26,419 @@
     font-family:'Inter',sans-serif;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    background:linear-gradient(135deg,#06101d,#0b1830,#101f3d);
+    background:
+        radial-gradient(circle at top right, rgba(0,245,255,.08), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(109,93,251,.08), transparent 30%),
+        linear-gradient(135deg,#050b14,#081221,#0b1730);
     color:white;
-    overflow:hidden;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
-/* MAIN */
-.container{
-    width:100vw;
-    height:100vh;
+/* NAVBAR */
+.navbar{
+    width:100%;
+    padding:24px 8%;
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
-    position:relative;
-    padding:40px;
+    position:fixed;
+    top:0;
+    z-index:999;
+    backdrop-filter:blur(18px);
+    background:rgba(5,10,20,.35);
+    border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-/* SLIDE */
-.slide{
-    display:none;
-    width:90%;
-    max-width:1200px;
-    height:85vh;
-    border-radius:28px;
-    overflow:hidden;
-    position:relative;
-    background:rgba(255,255,255,0.04);
-    backdrop-filter:blur(22px);
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:
-        0 20px 60px rgba(0,0,0,0.45),
-        inset 0 0 0 1px rgba(255,255,255,0.03);
+.logo{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:-1px;
+    color:white;
 }
 
-.slide.active{
-    display:block;
-    animation:fadeUp .7s ease;
+.logo span{
+    color:var(--primary);
 }
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.nav-links{
+    display:flex;
+    gap:18px;
+}
+
+.nav-links a{
+    color:#dbe6f3;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--primary);
+}
+
+/* SECTION */
+section{
+    padding:130px 8% 90px;
 }
 
 /* HERO */
-.hero-image{
-    width:100%;
-    height:38%;
-    background-size:cover;
-    background-position:center;
-    position:relative;
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
 }
 
-.hero-image::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to bottom, rgba(0,0,0,.2), rgba(7,17,31,.95));
-}
-
-.content{
-    padding:40px 50px;
-    position:relative;
-    z-index:2;
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:40px;
+    align-items:center;
 }
 
 .tag{
     display:inline-block;
-    padding:8px 18px;
+    padding:10px 18px;
     border-radius:999px;
-    background:rgba(0,245,255,.12);
-    border:1px solid rgba(0,245,255,.3);
+    background:rgba(0,245,255,.08);
+    border:1px solid rgba(0,245,255,.25);
     color:var(--primary);
-    font-size:14px;
-    margin-bottom:20px;
+    font-size:13px;
     font-weight:600;
+    margin-bottom:20px;
 }
 
-h1,h2{
-    font-size:42px;
+.hero h1{
+    font-size:64px;
+    line-height:1.05;
     margin-bottom:20px;
-    line-height:1.1;
+    letter-spacing:-2px;
+}
+
+.hero p{
+    color:var(--soft);
+    font-size:18px;
+    line-height:1.9;
+    margin-bottom:30px;
+}
+
+.glass-card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:28px;
+    backdrop-filter:blur(18px);
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.hero-image{
+    height:560px;
+    border-radius:30px;
+    background:url('img/tanah-utama.jpg') center/cover no-repeat;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-image::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(5,11,20,.9), rgba(0,0,0,.1));
+}
+
+/* TITLE */
+.section-title{
+    font-size:42px;
+    margin-bottom:18px;
     letter-spacing:-1px;
 }
 
-h2{
-    font-size:34px;
-}
-
-p{
+.section-desc{
     color:var(--soft);
-    font-size:18px;
-    line-height:1.8;
-    margin-bottom:20px;
+    line-height:1.9;
+    margin-bottom:40px;
+    font-size:17px;
 }
 
 /* PDF GRID */
 .doc-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:22px;
-    margin-top:30px;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:28px;
 }
 
 .doc-card{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:20px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
     overflow:hidden;
-    cursor:pointer;
     transition:.35s;
+    cursor:pointer;
 }
 
 .doc-card:hover{
     transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(0,245,255,.08);
+    box-shadow:0 20px 45px rgba(0,245,255,.08);
 }
 
-.doc-card img{
+.doc-preview{
     width:100%;
-    height:220px;
+    height:420px;
     object-fit:cover;
+    display:block;
 }
 
-.doc-info{
-    padding:18px;
+.doc-content{
+    padding:24px;
 }
 
-.doc-info h3{
-    font-size:16px;
-    margin-bottom:8px;
+.doc-content h3{
+    font-size:20px;
+    margin-bottom:10px;
 }
 
-.doc-info span{
-    font-size:14px;
+.doc-content p{
+    color:var(--soft);
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.open-btn{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1px solid rgba(0,245,255,.35);
     color:var(--primary);
+    font-size:14px;
+    font-weight:600;
 }
 
 /* CONTACT */
 .contact-box{
-    margin-top:30px;
-    padding:30px;
-    border-radius:24px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
+    padding:40px;
 }
 
-.contact-box p{
-    margin-bottom:10px;
+.contact-item{
+    margin-bottom:16px;
     font-size:18px;
+    color:#dbe6f3;
 }
 
-/* NAV */
-.nav{
-    position:absolute;
-    bottom:30px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    gap:20px;
-    z-index:10;
+/* FOOTER */
+footer{
+    padding:50px 8%;
+    border-top:1px solid rgba(255,255,255,.06);
+    text-align:center;
+    color:#8da2bd;
+    font-size:14px;
 }
 
-button{
-    border:none;
-    background:transparent;
-    color:var(--primary);
-    border:1px solid rgba(0,245,255,.4);
-    padding:14px 30px;
-    border-radius:999px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
+/* MOBILE */
+@media(max-width:900px){
+
+.hero-grid{
+    grid-template-columns:1fr;
 }
 
-button:hover{
-    background:var(--primary);
-    color:#001018;
+.hero h1{
+    font-size:42px;
 }
 
-/* LIGHTBOX */
-#lightbox{
+.hero-image{
+    height:420px;
+}
+
+.nav-links{
     display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.9);
-    z-index:999;
-    justify-content:center;
-    align-items:center;
 }
 
-#lightbox iframe{
-    width:90%;
-    height:90%;
-    border:none;
-    border-radius:20px;
-    background:white;
+.doc-preview{
+    height:360px;
+}
+
 }
 </style>
 </head>
 <body>
 
-<div class="container" id="app"></div>
-
-<div id="lightbox" onclick="closePDF()">
-    <iframe id="pdfViewer"></iframe>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">MERR<span>Portfolio</span></div>
+    <div class="nav-links">
+        <a href="#summary">Executive Summary</a>
+        <a href="#legal">Legal</a>
+        <a href="#protection">Protection</a>
+        <a href="#contact">Contact</a>
+    </div>
 </div>
 
-<script>
-
-const slidesData = [
-
-{
-    type:"intro",
-    title:"Investment Portfolio",
-    subtitle:"Lahan Strategis MERR Surabaya",
-    desc:"Selamat datang dalam presentasi investasi premium untuk aset lahan strategis di kawasan MERR Surabaya Timur. Dokumen ini disusun untuk memberikan gambaran menyeluruh mengenai kekuatan hukum, potensi bisnis, perlindungan aset, serta peluang kerja sama strategis yang bernilai tinggi.",
-    hero:"img/tanah-utama.jpg"
-},
-
-{
-    title:"Executive Summary",
-    desc:"Aset ini bukan sekadar tanah kosong, melainkan sebuah Legal Audit File yang lengkap. Seluruh rantai bukti telah tersusun mulai dari putusan pengadilan, proses eksekusi resmi, perlindungan institusional negara, validitas transaksi notariil, hingga finalisasi administrasi BPN. Inilah yang menjadikan aset ini sangat layak untuk investor besar.",
-    docs:[
-        {
-            title:"Preview Dokumen Utama",
-            preview:"preview/putusan-preview.jpg",
-            pdf:"pdf/putusan-pn.pdf"
-        }
-    ]
-},
-
-{
-    title:"Fondasi Hukum (Inkracht)",
-    desc:"Putusan PN Surabaya Nomor 728/Pdt.G/2018 menjadi fondasi utama dari seluruh aset ini. Status Inkracht berarti perkara telah berkekuatan hukum tetap, final, dan tidak lagi dapat diganggu gugat secara efektif. Ini adalah bentuk kepastian hukum tertinggi yang dicari investor properti besar.",
-    docs:[
-        {
-            title:"Putusan PN Surabaya",
-            preview:"preview/putusan-preview.jpg",
-            pdf:"pdf/putusan-pn.pdf"
-        }
-    ]
-},
-
-{
-    title:"Tahap Eksekusi (Amaning)",
-    desc:"Penetapan Amaning Nomor 43.EKS.2019 menunjukkan bahwa proses tidak berhenti di atas kertas. Pengadilan telah mengeluarkan teguran resmi untuk pengosongan lahan, artinya proses penguasaan fisik sedang berjalan secara nyata. Investor tidak membeli sengketa, tetapi membeli kepastian realisasi aset.",
-    docs:[
-        {
-            title:"Dokumen Amaning",
-            preview:"preview/amaning-preview.jpg",
-            pdf:"pdf/amaning.pdf"
-        }
-    ]
-},
-
-{
-    title:"Proteksi dan Pengawasan Negara",
-    desc:"Dukungan dari Mahkamah Agung serta Bareskrim Polri Tipidum menjadi lapisan perlindungan yang sangat kuat. Risiko gangguan pihak luar, mafia tanah, maupun hambatan fisik di lapangan dapat diminimalkan secara maksimal karena proyek ini berada dalam pengawasan institusi negara tingkat tinggi.",
-    docs:[
-        {
-            title:"Dukungan Polri & MA",
-            preview:"preview/polri-preview.jpg",
-            pdf:"pdf/dukungan-polri.pdf"
-        }
-    ]
-},
-
-{
-    title:"Validitas Transaksi dan Legal Standing",
-    desc:"Ikatan Jual Beli resmi melalui notaris membuktikan bahwa hubungan hukum atas aset ini sah, profesional, dan transparan. Ini memperkuat posisi hukum pemilik sekaligus mempermudah proses due diligence bagi calon investor strategis maupun mitra joint venture.",
-    docs:[
-        {
-            title:"IJB Notaris",
-            preview:"preview/ijb-preview.jpg",
-            pdf:"pdf/ijb.pdf"
-        }
-    ]
-},
-
-{
-    title:"Finalisasi Administrasi BPN",
-    desc:"Saat ini proses validasi batas lahan dan administrasi sertifikasi di BPN sedang berjalan. Ini menunjukkan bahwa aset tidak hanya kuat secara hukum, tetapi juga sedang ditingkatkan menuju validitas administratif penuh. Nilai komersial aset otomatis meningkat signifikan.",
-    docs:[
-        {
-            title:"Dokumen BPN",
-            preview:"preview/bpn-preview.jpg",
-            pdf:"pdf/bpn.pdf"
-        }
-    ]
-},
-
-{
-    title:"Contact Person",
-    contact:true,
-    desc:"Untuk pembahasan lebih lanjut, verifikasi dokumen asli, peninjauan lapangan, maupun diskusi kerja sama strategis, silakan menghubungi contact person berikut."
-}
-
-];
-
-let current = 0;
-const app = document.getElementById("app");
-
-function render(){
-
-    app.innerHTML = slidesData.map((slide,index)=>{
-
-        if(slide.type === "intro"){
-            return `
-            <div class="slide ${index===current ? 'active':''}">
-                <div class="hero-image" style="background-image:url('${slide.hero}')"></div>
-                <div class="content">
-                    <div class="tag">PREMIUM INVESTOR DECK</div>
-                    <h1>${slide.title}</h1>
-                    <h2>${slide.subtitle}</h2>
-                    <p>${slide.desc}</p>
-                </div>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-grid">
+        
+        <div>
+            <div class="tag">
+                PREMIUM INVESTOR DECK
             </div>
-            `;
-        }
 
-        if(slide.contact){
-            return `
-            <div class="slide ${index===current ? 'active':''}">
-                <div class="content" style="padding-top:80px;">
-                    <div class="tag">FINAL STEP</div>
-                    <h2>${slide.title}</h2>
-                    <p>${slide.desc}</p>
+            <h1>
+                Investasi Lahan Strategis
+                MERR Surabaya
+            </h1>
 
-                    <div class="contact-box">
-                        <p><strong>Nama:</strong> Ahmad Farel</p>
-                        <p><strong>WhatsApp:</strong> +62 xxx xxxx xxxx</p>
-                        <p><strong>Email:</strong> yourmail@email.com</p>
-                        <p><strong>Lokasi:</strong> Surabaya, Jawa Timur</p>
-                        <p><strong>Keterangan:</strong> Serious Investor Only</p>
-                    </div>
-                </div>
-            </div>
-            `;
-        }
+            <p>
+                Ini bukan sekadar pembelian lahan, melainkan pengambilalihan
+                aset premium dengan kekuatan hukum yang lengkap, perlindungan
+                negara, dan potensi pengembangan bernilai tinggi.
+                Seluruh dokumen telah tersusun sebagai Legal Audit File yang
+                siap untuk due diligence investor serius.
+            </p>
+        </div>
 
-        return `
-        <div class="slide ${index===current ? 'active':''}">
-            <div class="content" style="padding-top:70px;">
-                <div class="tag">LEGAL AUDIT FILE</div>
-                <h2>${slide.title}</h2>
-                <p>${slide.desc}</p>
+        <div class="hero-image glass-card"></div>
 
-                <div class="doc-grid">
-                    ${slide.docs.map(doc=>`
-                        <div class="doc-card" onclick="openPDF('${doc.pdf}')">
-                            <img src="${doc.preview}">
-                            <div class="doc-info">
-                                <h3>${doc.title}</h3>
-                                <span>Klik untuk membuka PDF</span>
-                            </div>
-                        </div>
-                    `).join("")}
-                </div>
+    </div>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section id="summary">
+    <div class="tag">EXECUTIVE SUMMARY</div>
+    <h2 class="section-title">Legal Audit File yang Kuat</h2>
+    <p class="section-desc">
+        Data yang dimiliki bukan sekadar kumpulan dokumen, melainkan sebuah
+        rangkaian bukti hukum yang saling terhubung mulai dari putusan pengadilan,
+        proses eksekusi resmi, perlindungan institusional negara, validitas transaksi,
+        hingga finalisasi administratif di BPN dan Bapenda.
+        Ini yang menjadikan aset ini sangat layak untuk investor besar.
+    </p>
+</section>
+
+<!-- LEGAL -->
+<section id="legal">
+    <div class="tag">FONDASI HUKUM</div>
+    <h2 class="section-title">Dokumen Inti Investasi</h2>
+
+    <div class="doc-grid">
+
+        <div class="doc-card" onclick="openPDF('pdf/putusan-pn.pdf')">
+            <img src="preview/putusan-preview.jpg" class="doc-preview">
+            <div class="doc-content">
+                <h3>Putusan PN Surabaya</h3>
+                <p>
+                    Putusan PN No. 728/Pdt.G/2018 dengan status Inkracht.
+                    Hak telah diakui negara secara final dan memiliki kepastian hukum maksimal.
+                </p>
+                <span class="open-btn">Buka File PDF</span>
             </div>
         </div>
-        `;
-    }).join("") + `
 
-    <div class="nav">
-        <button onclick="prev()">SEBELUMNYA</button>
-        <button onclick="next()">SELANJUTNYA</button>
+        <div class="doc-card" onclick="openPDF('pdf/amaning.pdf')">
+            <img src="preview/amaning-preview.jpg" class="doc-preview">
+            <div class="doc-content">
+                <h3>Penetapan Amaning</h3>
+                <p>
+                    Penetapan No. 43.EKS.2019 membuktikan proses pengosongan lahan
+                    berjalan secara resmi melalui pengadilan.
+                </p>
+                <span class="open-btn">Buka File PDF</span>
+            </div>
+        </div>
+
     </div>
-    `;
+</section>
+
+<!-- PROTECTION -->
+<section id="protection">
+    <div class="tag">PROTEKSI NEGARA</div>
+    <h2 class="section-title">Pengawasan dan Perlindungan Institusional</h2>
+
+    <div class="doc-grid">
+
+        <div class="doc-card" onclick="openPDF('pdf/dukungan-polri.pdf')">
+            <img src="preview/polri-preview.jpg" class="doc-preview">
+            <div class="doc-content">
+                <h3>Mahkamah Agung & Mabes Polri</h3>
+                <p>
+                    Dukungan institusional dari MA dan Mabes Polri menjadi
+                    lapisan perlindungan penting terhadap risiko mafia tanah
+                    dan gangguan pihak luar.
+                </p>
+                <span class="open-btn">Buka File PDF</span>
+            </div>
+        </div>
+
+        <div class="doc-card" onclick="openPDF('pdf/ijb.pdf')">
+            <img src="preview/ijb-preview.jpg" class="doc-preview">
+            <div class="doc-content">
+                <h3>IJB & Validitas Transaksi</h3>
+                <p>
+                    Perikatan jual beli notariil memperkuat legal standing,
+                    profesionalisme transaksi, dan kesiapan due diligence investor.
+                </p>
+                <span class="open-btn">Buka File PDF</span>
+            </div>
+        </div>
+
+        <div class="doc-card" onclick="openPDF('pdf/bapenda.pdf')">
+            <img src="preview/bapenda-preview.jpg" class="doc-preview">
+            <div class="doc-content">
+                <h3>Bapenda & Administrasi</h3>
+                <p>
+                    Progres administrasi perpajakan dan validasi tambahan
+                    berjalan lancar sebagai bentuk transparansi penuh.
+                </p>
+                <span class="open-btn">Buka File PDF</span>
+            </div>
+        </div>
+
+        <div class="doc-card" onclick="openPDF('pdf/bpn.pdf')">
+            <img src="preview/bpn-preview.jpg" class="doc-preview">
+            <div class="doc-content">
+                <h3>Finalisasi BPN</h3>
+                <p>
+                    Tahap validasi batas lahan dan sertifikasi formal sedang berjalan,
+                    meningkatkan nilai komersial aset secara signifikan.
+                </p>
+                <span class="open-btn">Buka File PDF</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="tag">CONTACT PERSON</div>
+    <h2 class="section-title">Diskusi Strategis & Due Diligence</h2>
+    <p class="section-desc">
+        Untuk verifikasi dokumen asli, site visit, pembahasan joint venture,
+        akuisisi strategis, maupun kerja sama investasi jangka panjang,
+        silakan menghubungi contact person berikut.
+    </p>
+
+    <div class="glass-card contact-box">
+        <div class="contact-item"><strong>Nama:</strong> Ahmad Farel</div>
+        <div class="contact-item"><strong>WhatsApp:</strong> +62 xxx xxxx xxxx</div>
+        <div class="contact-item"><strong>Email:</strong> yourmail@email.com</div>
+        <div class="contact-item"><strong>Lokasi:</strong> Surabaya, Jawa Timur</div>
+        <div class="contact-item"><strong>Keterangan:</strong> Serious Investor Only</div>
+    </div>
+</section>
+
+<footer>
+    CONFIDENTIAL INVESTOR DECK • Legal Audit File • MERR Surabaya
+</footer>
+
+<script>
+function openPDF(path){
+    window.open(path, "_blank");
 }
-
-function next(){
-    if(current < slidesData.length - 1){
-        current++;
-        render();
-    }
-}
-
-function prev(){
-    if(current > 0){
-        current--;
-        render();
-    }
-}
-
-function openPDF(pdfPath){
-    document.getElementById("pdfViewer").src = pdfPath;
-    document.getElementById("lightbox").style.display = "flex";
-}
-
-function closePDF(){
-    document.getElementById("lightbox").style.display = "none";
-    document.getElementById("pdfViewer").src = "";
-}
-
-render();
-
 </script>
+
 </body>
 </html>
